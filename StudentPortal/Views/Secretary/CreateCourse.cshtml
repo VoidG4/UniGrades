@@ -1,0 +1,69 @@
+﻿@model StudentPortal.Models.Course
+
+@{
+    Layout = "~/Views/Shared/_SecretaryLayout.cshtml";
+    ViewData["Title"] = "Νέο Μάθημα";
+    ViewBag.CurrentPage = "CreateCourse";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+
+        <div class="mb-4">
+            <a href="/Secretary/ManageCourses" class="text-decoration-none text-muted small">
+                <i class="bi bi-arrow-left me-1"></i> Επιστροφή στη λίστα
+            </a>
+            <h4 class="fw-bold text-dark mt-2">Δημιουργία Νέου Μαθήματος</h4>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form asp-action="CreateCourse">
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary small text-uppercase">Τίτλος Μαθήματος</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-type text-muted"></i></span>
+                            <input asp-for="CourseTitle" class="form-control border-start-0 ps-0 bg-light" placeholder="π.χ. Τεχνητή Νοημοσύνη" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary small text-uppercase">Εξάμηνο</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar-event text-muted"></i></span>
+                            <select asp-for="CourseSemester" class="form-select border-start-0 ps-0 bg-light" required>
+                                <option value="">-- Επιλέξτε Εξάμηνο --</option>
+                                @for (int i = 1; i <= 8; i++)
+                                {
+                                    <option value="@i">@i@("ο") Εξάμηνο</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary small text-uppercase">Ανάθεση σε Καθηγητή</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-badge text-muted"></i></span>
+                            <select asp-for="ProfessorsAfm" class="form-select border-start-0 ps-0 bg-light" asp-items="ViewBag.ProfessorsAfm">
+                                <option value="">-- Επιλέξτε Καθηγητή (Προαιρετικό) --</option>
+                            </select>
+                        </div>
+                        <div class="form-text small">Μπορείτε να κάνετε την ανάθεση και αργότερα.</div>
+                    </div>
+
+                    <hr class="my-4 opacity-10">
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold shadow-sm">
+                            <i class="bi bi-save me-2"></i> Αποθήκευση Μαθήματος
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,131 @@
+﻿@{
+    var currentPage = ViewBag.CurrentPage as string;
+
+    bool isGradesMenuOpen = currentPage == "GradesByCourse" ||
+                            currentPage == "GradesBySemester" ||
+                            currentPage == "TotalGrades";
+}
+
+<div class="d-flex flex-column flex-shrink-0 p-4 h-100 text-white" style="background-color: #0f172a;">
+
+    <div class="d-flex align-items-center gap-3 mb-5 px-2">
+        <div class="d-flex align-items-center justify-content-center shadow-lg"
+             style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #3b82f6, #4f46e5);">
+            <i class="bi bi-mortarboard-fill fs-4 text-white"></i>
+        </div>
+        <div style="line-height: 1.2;">
+            <h1 class="fs-5 fw-bold mb-0 text-white" style="letter-spacing: -0.5px;">UniGrades</h1>
+            <small class="text-white-50" style="font-size: 11px;">Σύστημα Βαθμολογίου</small>
+        </div>
+    </div>
+
+    <ul class="nav flex-column mb-auto gap-2">
+
+        <li class="nav-item">
+            <a href="/Student/Index/@ViewBag.StudentId"
+               class="nav-link d-flex align-items-center px-3 py-3 rounded-3 sidebar-link @(currentPage == "Home" ? "active-link" : "text-white-50")">
+                <i class="bi bi-house-door-fill me-3 fs-5"></i>
+                <span class="fw-medium">Αρχική</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#gradesSubmenu" data-bs-toggle="collapse"
+               class="nav-link d-flex align-items-center justify-content-between px-3 py-3 rounded-3 sidebar-link @(isGradesMenuOpen ? "text-white bg-slate-800" : "text-white-50")"
+               aria-expanded="@(isGradesMenuOpen ? "true" : "false")">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-mortarboard-fill me-3 fs-5"></i>
+                    <span class="fw-medium">Η Βαθμολογία μου</span>
+                </div>
+                <i class="bi bi-chevron-down small transition-icon @(isGradesMenuOpen ? "rotate-180" : "")"></i>
+            </a>
+
+            <div class="collapse @(isGradesMenuOpen ? "show" : "") mt-1" id="gradesSubmenu">
+                <ul class="nav flex-column ps-3 border-start border-secondary border-opacity-25 ms-3">
+
+                    <li class="nav-item">
+                        <a href="/Student/GradesByCourse/@ViewBag.StudentId"
+                           class="nav-link d-flex align-items-center py-2 sub-link @(currentPage == "GradesByCourse" ? "active-sub" : "text-white-50")">
+                            <i class="bi bi-book me-2"></i>
+                            Ανά Μάθημα
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/Student/GradesBySemester/@ViewBag.StudentId"
+                           class="nav-link d-flex align-items-center py-2 sub-link @(currentPage == "GradesBySemester" ? "active-sub" : "text-white-50")">
+                            <i class="bi bi-clipboard-data me-2"></i>
+                            Ανά Εξάμηνο
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/Student/TotalGrades/@ViewBag.StudentId"
+                           class="nav-link d-flex align-items-center py-2 sub-link @(currentPage == "TotalGrades" ? "active-sub" : "text-white-50")">
+                            <i class="bi bi-file-earmark-text me-2"></i>
+                            Συνολική
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <div class="mt-4 pt-4 border-top border-secondary border-opacity-25">
+        <div class="bg-white bg-opacity-10 rounded-3 p-3 mb-3">
+            <p class="text-white-50 mb-0" style="font-size: 11px;">Συνδεδεμένος ως</p>
+            <p class="fw-bold text-white mb-0 text-truncate">Φοιτητής (@ViewBag.StudentId)</p>
+        </div>
+        <a href="/Account/Login" class="btn btn-outline-light w-100 d-flex align-items-center justify-content-center border-opacity-25 text-white-50 hover-white">
+            <i class="bi bi-box-arrow-right me-2"></i>
+            Αποσύνδεση
+        </a>
+    </div>
+</div>
+
+<style>
+    .sidebar-link:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: white !important;
+    }
+
+    .active-link {
+        background-color: #3b82f6 !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .bg-slate-800 {
+        background-color: rgba(30, 41, 59, 0.8);
+        color: white !important;
+    }
+
+    .sub-link {
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+
+        .sub-link:hover {
+            color: white !important;
+            transform: translateX(5px);
+        }
+
+    .active-sub {
+        color: #60a5fa !important;
+        font-weight: 500;
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    .transition-icon {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-white:hover {
+        background-color: rgba(255,255,255,0.1);
+        color: white !important;
+        border-color: white;
+    }
+</style>

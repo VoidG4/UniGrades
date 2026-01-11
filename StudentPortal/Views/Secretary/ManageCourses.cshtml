@@ -1,0 +1,120 @@
+﻿@model IEnumerable<StudentPortal.Models.Course>
+
+@{
+    Layout = "~/Views/Shared/_SecretaryLayout.cshtml";
+    ViewData["Title"] = "Διαχείριση Μαθημάτων";
+    ViewBag.CurrentPage = "Courses";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold text-dark mb-1">Πρόγραμμα Σπουδών</h4>
+        <p class="text-muted small mb-0">Λίστα όλων των μαθημάτων και αναθέσεις καθηγητών</p>
+    </div>
+    <a asp-action="CreateCourse" class="btn btn-primary shadow-sm">
+        <i class="bi bi-plus-lg me-2"></i>Νέο Μάθημα
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3 text-secondary text-uppercase small fw-bold">Τίτλος Μαθήματος</th>
+                        <th class="py-3 text-secondary text-uppercase small fw-bold">Εξάμηνο</th>
+                        <th class="py-3 text-secondary text-uppercase small fw-bold">Υπεύθυνος Καθηγητής</th>
+                        <th class="text-end pe-4 py-3 text-secondary text-uppercase small fw-bold">Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-dark">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-journal-text"></i>
+                                    </div>
+                                    @item.CourseTitle
+                                </div>
+                            </td>
+
+                            <td>
+                                @{
+                                    int.TryParse(item.CourseSemester, out int semesterNum);
+                                    bool isOdd = semesterNum % 2 != 0;
+                                }
+
+                                @if (isOdd)
+                                {
+                                    <span class="badge bg-info bg-opacity-10 text-info border border-info rounded-pill px-3">
+                                        @item.CourseSemester@("ο") Εξάμηνο
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning rounded-pill px-3">
+                                        @item.CourseSemester@("ο") Εξάμηνο
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.ProfessorsAfmNavigation != null)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-secondary bg-opacity-10 text-secondary me-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; font-size: 12px;">
+                                            @item.ProfessorsAfmNavigation.Name.Substring(0, 1)@item.ProfessorsAfmNavigation.Surname.Substring(0, 1)
+                                        </div>
+                                        <span>@item.ProfessorsAfmNavigation.Surname @item.ProfessorsAfmNavigation.Name</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic small">-- Χωρίς Ανάθεση --</span>
+                                }
+                            </td>
+
+                            <td class="text-end pe-4">
+                                <div class="d-flex justify-content-end gap-2">
+
+                                    <a asp-action="EditCourse" asp-route-id="@item.IdCourse"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Επεξεργασία & Ανάθεση">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <form asp-action="DeleteCourse" asp-route-id="@item.IdCourse" method="post"
+                                          onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε το μάθημα @item.CourseTitle;');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Διαγραφή">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

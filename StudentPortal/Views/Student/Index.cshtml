@@ -1,0 +1,153 @@
+﻿@model IEnumerable<StudentPortal.Models.CourseHasStudent>
+
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+
+    ViewData["Title"] = "Η Βαθμολογία μου";
+    ViewData["PageHeaderTitle"] = $"Καλωσήρθες, {ViewBag.StudentName}";
+    ViewData["PageHeaderDesc"] = "Προβολή της βαθμολογίας και των στατιστικών σας";
+    ViewData["PageHeaderIcon"] = "bi-mortarboard-fill";
+}
+
+<partial name="_PageHeader" />
+
+<div class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Μέσος Όρος</span>
+                    <i class="bi bi-trophy text-primary fs-5"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.Average</h2>
+                <span class="text-muted small">Βαθμολογία</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Επιτυχίες</span>
+                    <i class="bi bi-graph-up-arrow text-success fs-5"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.PassedCount / @ViewBag.TotalCourses</h2>
+                <span class="text-muted small">Περασμένα / Σύνολο</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Εξάμηνο</span>
+                    <i class="bi bi-calendar-event text-info fs-5"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.Semester</h2>
+                <span class="text-muted small">Τρέχον</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Μαθήματα</span>
+                    <i class="bi bi-file-earmark-text text-warning fs-5"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.TotalCourses</h2>
+                <span class="text-muted small">Δηλωμένα</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5">
+    <h4 class="mb-4 fw-bold text-dark">Γρήγορες Ενέργειες</h4>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a href="/Student/GradesByCourse/@ViewBag.StudentId" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border hover-effect p-3 text-center">
+                    <div class="mx-auto bg-primary bg-opacity-10 rounded-circle p-3 mb-3" style="width: 60px; height: 60px;">
+                        <i class="bi bi-book text-primary fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Ανά Μάθημα</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/Student/GradesBySemester/@ViewBag.StudentId" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border hover-effect p-3 text-center">
+                    <div class="mx-auto bg-info bg-opacity-10 rounded-circle p-3 mb-3" style="width: 60px; height: 60px;">
+                        <i class="bi bi-calendar3 text-info fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Ανά Εξάμηνο</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/Student/TotalGrades/@ViewBag.StudentId" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border hover-effect p-3 text-center">
+                    <div class="mx-auto bg-success bg-opacity-10 rounded-circle p-3 mb-3" style="width: 60px; height: 60px;">
+                        <i class="bi bi-file-text text-success fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Αναλυτική</h5>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 mb-5">
+    <div class="card-header bg-white py-3 border-bottom-0">
+        <h5 class="mb-0 fw-bold">Οι Πρόσφατες Βαθμολογίες μου</h5>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <p>Δεν έχετε ακόμα βαθμολογίες</p>
+            </div>
+        }
+        else
+        {
+            <div class="list-group list-group-flush">
+                @foreach (var item in Model)
+                {
+                    <div class="list-group-item d-flex justify-content-between align-items-center p-3 border-bottom-0 border-top">
+                        <div>
+                            <h6 class="mb-1 fw-bold text-dark">@item.CourseIdCourseNavigation.CourseTitle</h6>
+                            <small class="text-muted">
+                                Εξάμηνο: @item.CourseIdCourseNavigation.CourseSemester
+                            </small>
+                        </div>
+                        @if (item.GradeCourseStudent >= 5)
+                        {
+                            <span class="badge rounded-pill bg-success fs-6 px-3 py-2">@item.GradeCourseStudent</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill bg-danger fs-6 px-3 py-2">@item.GradeCourseStudent</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+
+        .hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            border-color: #0d6efd !important;
+        }
+</style>

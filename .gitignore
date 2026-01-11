@@ -1,0 +1,22 @@
+# Αρχεία ρυθμίσεων (Ευαίσθητα δεδομένα)
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+
+# Φάκελοι Build και Binaries (Δεν χρειάζονται στο GitHub)
+[Bb]in/
+[Oo]bj/
+
+# Αρχεία του Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# User Secrets
+secrets.json
+
+# Προσωρινά αρχεία συστήματος
+.DS_Store
+Thumbs.db

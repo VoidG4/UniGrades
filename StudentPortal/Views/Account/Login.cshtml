@@ -1,0 +1,225 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Είσοδος";
+}
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Είσοδος - UniGrades</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22 fill=%22%233b82f6%22><path d=%22M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z%22/><path d=%22M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z%22/></svg>">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- LEFT SIDE: FORM --- */
+        .login-section {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8vw;
+            position: relative;
+        }
+
+        .login-header h1 {
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -1px;
+        }
+
+        .brand-logo {
+            width: 60px; 
+            height: 60px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(59, 130, 246, 0.1); 
+            border-radius: 12px;
+            color: #3b82f6;
+        }
+
+        .form-control {
+            padding: 1rem 1.2rem;
+            border-radius: 0.75rem;
+            border: 2px solid #f1f5f9;
+            background-color: #f8fafc;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+            .form-control:focus {
+                border-color: #3b82f6;
+                background-color: #fff;
+                box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            }
+
+        .input-group-text {
+            border: 2px solid #f1f5f9;
+            background-color: #f8fafc;
+            border-right: none;
+            border-radius: 0.75rem 0 0 0.75rem;
+            color: #94a3b8;
+            min-width: 60px; 
+            justify-content: center; 
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            border-left: none;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+
+            .form-control:focus + .input-group-text {
+                border-color: #3b82f6;
+            }
+
+        .btn-login {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background-color: #0f172a;
+            border: none;
+            color: white;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+            .btn-login:hover {
+                background-color: #3b82f6;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            }
+
+        .hero-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            opacity: 0.1;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 2rem;
+            max-width: 500px;
+            color: white;
+            z-index: 10;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+
+            <div class="col-lg-5 col-md-6 login-section shadow-lg">
+
+                <div class="mb-5 animate-fade-in">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="brand-logo">
+                            <i class="bi bi-mortarboard-fill fs-3"></i>
+                        </div>
+                        <span class="fw-bold text-muted text-uppercase small ls-1">University Portal</span>
+                    </div>
+
+                    <h1 class="mb-2">Καλωσήρθατε</h1>
+                    <p class="text-muted fs-5">Συνδεθείτε για να συνεχίσετε στο UniGrades</p>
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger border-0 d-flex align-items-center mb-4 rounded-3 bg-danger bg-opacity-10 text-danger animate-fade-in">
+                        <i class="bi bi-exclamation-octagon-fill me-3 fs-5"></i>
+                        <div>@ViewBag.Error</div>
+                    </div>
+                }
+
+                <form action="/Account/Login" method="post" class="animate-fade-in" style="animation-delay: 0.1s;">
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-muted small text-uppercase">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person text-primary"></i></span>
+                            <input type="text" name="username" class="form-control" placeholder="π.χ. student1" required autofocus />
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="form-label fw-bold text-muted small text-uppercase">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock text-primary"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="••••••••" required />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100 shadow-sm">
+                        Είσοδος στο Σύστημα
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+
+                </form>
+
+                <div class="mt-5 text-center text-muted small animate-fade-in" style="animation-delay: 0.2s;">
+                    <p>&copy; @DateTime.Now.Year UniGrades System. All rights reserved.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-6 hero-section d-none d-md-flex">
+
+                <div class="circle-decoration" style="width: 400px; height: 400px; top: -100px; right: -50px;"></div>
+                <div class="circle-decoration" style="width: 300px; height: 300px; bottom: 50px; left: -50px; background: linear-gradient(135deg, #10b981, #059669);"></div>
+
+                <div class="glass-card text-center animate-fade-in">
+                    <i class="bi bi-buildings-fill display-3 mb-4 d-block text-white-50"></i>
+                    <h2 class="fw-bold mb-3">Πανεπιστημιακή Πλατφόρμα</h2>
+                    <p class="lead text-white-50 mb-0">
+                        Διαχείριση βαθμολογιών, δηλώσεις μαθημάτων και οργάνωση διδακτικού έργου σε ένα σύγχρονο περιβάλλον.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@{
+    var title = ViewData["PageHeaderTitle"] as string ?? ViewData["Title"] as string;
+    var description = ViewData["PageHeaderDesc"] as string;
+    var icon = ViewData["PageHeaderIcon"] as string ?? "bi-app";
+}
+
+<div class="mb-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-4">
+            <div class="d-flex align-items-center justify-content-center text-white shadow-sm"
+                 style="width: 56px; height: 56px; border-radius: 1rem; background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);">
+                <i class="bi @icon fs-4"></i>
+            </div>
+            <div>
+                <h1 class="h3 fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">@title</h1>
+                @if (!string.IsNullOrEmpty(description))
+                {
+                    <p class="text-muted mb-0 mt-1">@description</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

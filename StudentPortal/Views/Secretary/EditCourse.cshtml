@@ -1,0 +1,60 @@
+﻿@model StudentPortal.Models.Course
+
+@{
+    Layout = "~/Views/Shared/_SecretaryLayout.cshtml";
+    ViewData["Title"] = "Επεξεργασία Μαθήματος";
+    ViewBag.CurrentPage = "Courses";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="mb-4">
+            <a href="/Secretary/ManageCourses" class="text-decoration-none text-muted small">
+                <i class="bi bi-arrow-left me-1"></i> Επιστροφή
+            </a>
+            <h4 class="fw-bold text-dark mt-2">Επεξεργασία / Ανάθεση</h4>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form asp-action="EditCourse">
+                    <input type="hidden" asp-for="IdCourse" />
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase text-muted">Τίτλος Μαθήματος</label>
+                        <input asp-for="CourseTitle" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase text-muted">Εξάμηνο</label>
+                        <select asp-for="CourseSemester" class="form-select">
+                            @for (int i = 1; i <= 8; i++)
+                            {
+                                <option value="@i">@i@("ο") Εξάμηνο</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-uppercase text-primary">Υπεύθυνος Καθηγητής</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary bg-opacity-10 text-primary border-end-0">
+                                <i class="bi bi-person-badge-fill"></i>
+                            </span>
+                            <select asp-for="ProfessorsAfm" class="form-select border-start-0" asp-items="ViewBag.ProfessorsAfm">
+                                <option value="">-- Χωρίς Ανάθεση --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary fw-bold">
+                            <i class="bi bi-check-lg me-2"></i> Αποθήκευση Αλλαγών
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

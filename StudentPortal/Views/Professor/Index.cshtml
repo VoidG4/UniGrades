@@ -1,0 +1,154 @@
+﻿@model IEnumerable<StudentPortal.Models.CourseHasStudent>
+
+@{
+    Layout = "~/Views/Shared/_ProfessorLayout.cshtml";
+    ViewData["Title"] = "Επισκόπηση";
+
+    ViewData["PageHeaderTitle"] = $"Καλωσήρθατε, {ViewBag.ProfessorName}";
+    ViewData["PageHeaderDesc"] = "Διαχείριση βαθμολογιών μαθημάτων";
+    ViewData["PageHeaderIcon"] = "bi-mortarboard-fill";
+}
+
+<partial name="_PageHeader" />
+
+<div class="row g-4 mb-5">
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Μαθηματα</span>
+                    <i class="bi bi-book text-primary fs-4"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.CoursesCount</h2>
+                <span class="text-muted small">Υπεύθυνος</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Φοιτητες</span>
+                    <i class="bi bi-mortarboard-fill text-success fs-4"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.UniqueStudents</h2>
+                <span class="text-muted small">Βαθμολογήθηκαν</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Βαθμολογιες</span>
+                    <i class="bi bi-clipboard-check text-info fs-4"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.TotalGraded</h2>
+                <span class="text-muted small">Καταχωρημένες</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 border-start border-4 border-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted small text-uppercase fw-bold">Εκκρεμεις</span>
+                    <i class="bi bi-calendar-event text-warning fs-4"></i>
+                </div>
+                <h2 class="display-6 fw-bold text-dark">@ViewBag.PendingGrades</h2>
+                <span class="text-muted small">Προς βαθμολόγηση</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5">
+    <h4 class="mb-4 fw-bold text-dark">Γρήγορες Ενέργειες</h4>
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <a href="/Professor/MyCourses/@ViewBag.ProfessorId?mode=view" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border hover-effect p-4 d-flex flex-row align-items-center">
+                    <div class="bg-primary bg-opacity-10 rounded-3 p-3 me-4">
+                        <i class="bi bi-book text-primary fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">Προβολή Βαθμολογίας</h5>
+                        <p class="text-muted small mb-0">Δείτε τις βαθμολογίες ανά μάθημα</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6">
+            <a href="/Professor/MyCourses/@ViewBag.ProfessorId?mode=enter" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border hover-effect p-4 d-flex flex-row align-items-center">
+                    <div class="bg-success bg-opacity-10 rounded-3 p-3 me-4">
+                        <i class="bi bi-clipboard-check text-success fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-1">Καταχώρηση Βαθμολογίας</h5>
+                        <p class="text-muted small mb-0">Περάστε νέους βαθμούς φοιτητών</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 mb-5">
+    <div class="card-header bg-white py-3 border-bottom-0">
+        <h5 class="mb-0 fw-bold">Πρόσφατες Βαθμολογήσεις</h5>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <p>Δεν υπάρχουν βαθμολογήσεις ακόμα</p>
+            </div>
+        }
+        else
+        {
+            <div class="list-group list-group-flush">
+                @foreach (var item in Model)
+                {
+                    <div class="list-group-item d-flex justify-content-between align-items-center p-3 border-bottom-0 border-top bg-light bg-opacity-10">
+                        <div>
+                            <p class="fw-bold text-dark mb-1">@item.CourseIdCourseNavigation.CourseTitle</p>
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-person me-1"></i>
+                                @item.StudentsRegistrationNumberNavigation.Name @item.StudentsRegistrationNumberNavigation.Surname
+                            </p>
+                        </div>
+
+                        @if (item.GradeCourseStudent >= 5)
+                        {
+                            <span class="badge rounded-pill bg-success fs-6 px-3 py-2">@item.GradeCourseStudent</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill bg-danger fs-6 px-3 py-2">@item.GradeCourseStudent</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+
+        .hover-effect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            border-color: #0d6efd !important;
+        }
+</style>

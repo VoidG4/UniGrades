@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_SecretaryLayout.cshtml";
+    ViewData["Title"] = "Δήλωση Μαθήματος";
+    ViewBag.CurrentPage = "Assign";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="text-center mb-5">
+                <div class="bg-white p-3 rounded-circle shadow-sm d-inline-block mb-3 border">
+                    <i class="bi bi-clipboard-plus text-primary fs-2"></i>
+                </div>
+                <h3 class="fw-bold">Δήλωση Μαθήματος</h3>
+                <p class="text-muted">Επιλέξτε φοιτητή και μάθημα για να δημιουργήσετε νέα εγγραφή</p>
+            </div>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success d-flex align-items-center shadow-sm border-0 border-start border-4 border-success mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
+                    <div>
+                        <strong>Επιτυχία!</strong> @TempData["Success"]
+                    </div>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger d-flex align-items-center shadow-sm border-0 border-start border-4 border-danger mb-4" role="alert">
+                    <i class="bi bi-exclamation-circle-fill fs-4 me-3 text-danger"></i>
+                    <div>
+                        <strong>Σφάλμα!</strong> @TempData["Error"]
+                    </div>
+                </div>
+            }
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+                    <form asp-action="AssignStudentToCourse" method="post">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark">Επιλογή Φοιτητή</label>
+                            <select name="studentId" class="form-select form-select-lg bg-light border-0" asp-items="ViewBag.Students" required>
+                                <option value="">-- Αναζήτηση Φοιτητή --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark">Επιλογή Μαθήματος</label>
+                            <select name="courseId" class="form-select form-select-lg bg-light border-0" asp-items="ViewBag.Courses" required>
+                                <option value="">-- Αναζήτηση Μαθήματος --</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm py-3">
+                                <i class="bi bi-plus-circle me-2"></i> Ολοκλήρωση Δήλωσης
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/Secretary/Index" class="text-decoration-none text-muted small">
+                    <i class="bi bi-arrow-left me-1"></i> Επιστροφή στο Dashboard
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

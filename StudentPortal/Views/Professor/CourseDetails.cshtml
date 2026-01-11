@@ -1,0 +1,93 @@
+﻿@model IEnumerable<StudentPortal.Models.CourseHasStudent>
+
+@{
+    Layout = "~/Views/Shared/_ProfessorLayout.cshtml";
+
+    bool isViewMode = ViewBag.CurrentMode == "view";
+    ViewData["Title"] = isViewMode ? "Προβολή Βαθμολογίας" : "Καταχώρηση Βαθμολογίας";
+
+    ViewData["PageHeaderTitle"] = ViewBag.CourseTitle;
+    ViewData["PageHeaderDesc"] = isViewMode ? "Λίστα φοιτητών που έχουν βαθμολογηθεί" : "Λίστα φοιτητών που περιμένουν βαθμολογία";
+    ViewData["PageHeaderIcon"] = isViewMode ? "bi-eye" : "bi-pencil-square";
+}
+
+<div class="mb-4">
+    <a href="/Professor/MyCourses/@ViewBag.ProfessorId?mode=@ViewBag.CurrentMode" class="text-decoration-none text-muted">
+        <i class="bi bi-arrow-left me-1"></i> Επιστροφή στα Μαθήματα
+    </a>
+</div>
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3 border-bottom-0 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold text-primary">@ViewBag.TableTitle (@Model.Count())</h5>
+    </div>
+
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <div class="mb-3">
+                    @if (isViewMode)
+                    {
+                        <i class="bi bi-folder2-open text-muted fs-1 opacity-50"></i>
+                    }
+                    else
+                    {
+                        <i class="bi bi-check-circle-fill text-success fs-1 opacity-50"></i>
+                    }
+                </div>
+                <h5 class="text-muted fw-bold">@ViewBag.NoDataMessage</h5>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Α.Μ.</th>
+                        <th>Ονοματεπώνυμο</th>
+                        <th class="text-center">Βαθμός</th>
+                        <th class="text-end pe-4">Ενέργεια</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">@item.StudentsRegistrationNumber</td>
+                            <td>
+                                <div class="fw-medium text-dark">
+                                    @item.StudentsRegistrationNumberNavigation.Surname @item.StudentsRegistrationNumberNavigation.Name
+                                </div>
+                            </td>
+
+                            <form asp-action="UpdateGrade" method="post">
+                                <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+                                <input type="hidden" name="studentId" value="@item.StudentsRegistrationNumber" />
+                                <input type="hidden" name="professorId" value="@ViewBag.ProfessorId" />
+                                <input type="hidden" name="mode" value="@ViewBag.CurrentMode" />
+
+                            <td class="text-center" style="width: 150px;">
+                                <input type="number"
+                                       name="grade"
+                                       value="@(item.GradeCourseStudent.HasValue? item.GradeCourseStudent.ToString() : "")"
+                                       min="0" max="10"
+                                       class="form-control text-center fw-bold @(item.GradeCourseStudent.HasValue ? "border-success text-success bg-success bg-opacity-10" : "border-warning bg-warning bg-opacity-10")"
+                                       placeholder="-" />
+                            </td>
+
+                            <td class="text-end pe-4">
+                                <button type="submit" class="btn btn-sm btn-primary shadow-sm">
+                                    <i class="bi bi-save me-1"></i> Αποθήκευση
+                                </button>
+                            </td>
+                            </form>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

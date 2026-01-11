@@ -1,0 +1,61 @@
+﻿@model IEnumerable<StudentPortal.Models.Student>
+@{
+    Layout = "~/Views/Shared/_SecretaryLayout.cshtml";
+    ViewData["Title"] = "Διαχείριση Φοιτητών";
+    ViewBag.CurrentPage = "Students";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold text-dark">Μητρώο Φοιτητών</h4>
+    <a asp-action="CreateStudent" class="btn btn-success shadow-sm">
+        <i class="bi bi-person-plus-fill me-2"></i>Εγγραφή Φοιτητή
+    </a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-4">Α.Μ.</th>
+                    <th>Ονοματεπώνυμο</th>
+                    <th>Τμήμα</th>
+                    <th>Username</th>
+                    <th class="text-end pe-4">Ενέργειες</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="ps-4 fw-bold">@item.RegistrationNumber</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 12px;">
+                                    @item.Name.Substring(0, 1)@item.Surname.Substring(0, 1)
+                                </div>
+                                @item.Surname @item.Name
+                            </div>
+                        </td>
+                        <td><span class="badge bg-light text-dark border">@item.Department</span></td>
+                        <td class="text-muted small">@item.UsersUsername</td>
+                        <td class="text-end pe-4">
+                            <form asp-action="DeleteStudent" asp-route-id="@item.RegistrationNumber" method="post" onsubmit="return confirm('Διαγραφή φοιτητή;');">
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
